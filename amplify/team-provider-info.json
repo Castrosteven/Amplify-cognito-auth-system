@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-alloy-dev-141323-authRole",
+      "UnauthRoleArn": "arn:aws:iam::573687461965:role/amplify-alloy-dev-141323-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::573687461965:role/amplify-alloy-dev-141323-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-alloy-dev-141323-deployment",
+      "UnauthRoleName": "amplify-alloy-dev-141323-unauthRole",
+      "StackName": "amplify-alloy-dev-141323",
+      "StackId": "arn:aws:cloudformation:us-east-1:573687461965:stack/amplify-alloy-dev-141323/f0d91840-409b-11eb-b583-0e0c962da451",
+      "AmplifyAppId": "d5qkd0t6twhwa"
+    },
+    "categories": {
+      "auth": {
+        "alloy55762637": {}
+      }
+    }
+  }
+}
