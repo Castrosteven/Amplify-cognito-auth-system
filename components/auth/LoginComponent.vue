@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-card v-if="!userNotConfirmedError">
+    <v-card>
+      <v-card-title>Login</v-card-title>
       <v-card-text>
         <v-form
           @submit.prevent="login"
@@ -36,30 +37,12 @@
         </p>
       </v-card-actions>
     </v-card>
-    <div v-else-if="userNotConfirmedError">
-      <v-container>
-        <v-row justify="center">
-          <v-col cols="12">
-            <confirmation-component :resendEmail="email" />
-          </v-col>
-          <v-col cols="12">
-            <v-btn color="primary" @click="resendCode">
-              Send me a new confirmation code to {{ this.email }}
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
   </div>
 </template>
 
 <script>
-import ConfirmationComponent from "./ConfirmationComponent.vue";
 export default {
   name: "LoginComponent",
-  components: {
-    ConfirmationComponent
-  },
   data() {
     return {
       value: "",
@@ -81,30 +64,10 @@ export default {
       this.$emit("switch");
     },
     login() {
-      this.$refs.form.validate()
-        ? this.$store
-            .dispatch("auth/signIn", {
-              username: this.email,
-              password: this.password
-            })
-            .then(() => {
-              this.$store.state.auth.isAuthenticated
-                ? this.$router.push("/")
-                : this.$store.state.auth.error.code ===
-                  "UserNotConfirmedException"
-                ? (this.userNotConfirmedError = true)
-                : null;
-            })
-        : null;
-    },
-    resendCode() {
-      this.$store
-        .dispatch("reSendSignUp", { username: this.email })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
+      if (this.$refs.form.validate())
+        this.$store.dispatch("auth/signIn", {
+          username: this.email,
+          password: this.password
         });
     }
   }

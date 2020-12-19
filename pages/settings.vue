@@ -1,8 +1,11 @@
 <template>
   <v-container>
     <v-row>
-      <v-col>
+      <v-col cols="12">
         <AccountSettings />
+      </v-col>
+      <v-col>
+        <ResetPassword />
       </v-col>
     </v-row>
   </v-container>
@@ -10,10 +13,13 @@
 
 <script>
 import AccountSettings from "@/components/settings/AccountSettings.vue";
+import ResetPassword from "@/components/settings/ResetPassword.vue";
+
 export default {
   name: "settings",
   components: {
-    AccountSettings
+    AccountSettings,
+    ResetPassword
   }
 };
 </script>

@@ -1,110 +1,75 @@
 import { Auth } from "aws-amplify";
-export const state = () => ({
-  isAuthenticated: false,
-  user: {},
-  error: null,
-  msg: null,
-  sentCode: null,
-  confirmed: null
-});
 
-export const mutations = {
-  setUser(state, user) {
-    state.user = user;
-  },
-  setError(state, error) {
-    state.error = error;
-  },
-  message(state, msg) {
-    state.msg = msg;
-  },
-  isAuth(state, bool) {
-    state.isAuthenticated = bool;
-  },
-  sentCode(state, bool) {
-    state.sentCode = bool;
-  }
-};
-
+export const state = () => ({});
+export const mutations = {};
 export const actions = {
-  async signIn({ commit }, { username, password }) {
-    commit("setError", null);
-    try {
-      const user = await Auth.signIn(username, password);
-      console.log(user);
-      commit("isAuth", true);
-      commit("setUser", user);
-      return user;
-    } catch (error) {
-      commit("setError", error);
-      console.log("error signing in", error);
-      return error;
-    }
-  },
-  async signOut() {
-    console.log("ran");
-    try {
-      await Auth.signOut();
-    } catch (error) {
-      console.log("error signing out: ", error);
-    }
-  },
   async signUp({ commit }, { username, password }) {
-    commit("setError", null);
-    console.log(username, password);
-    try {
-      const { user } = await Auth.signUp({
-        username,
-        password,
-        attributes: {
-          // email, // optional
-          // phone_number, // optional - E.164 number convention
-          // // other custom attributes
-        }
+    await Auth.signUp({
+      username,
+      password,
+      attributes: {
+        // email, // optional
+        // phone_number, // optional - E.164 number convention
+        // // other custom attributes
+      }
+    })
+      .then(user => {
+        commit("setUser", user, { root: true });
+        if (user.userConfirmed == false)
+          commit(
+            "setMessage",
+            `Verification code sent to ${user.codeDeliveryDetails.Destination}`,
+            {
+              root: true
+            }
+          );
+      })
+      .catch(err => {
+        commit("setError", err, { root: true });
       });
-      user != null
-        ? commit("message", `Verification code sent to ${user.username}`)
-        : null;
-      commit("setUser", user);
-      console.log(user);
-      commit("sentCode", true);
-    } catch (error) {
-      console.log("error signing up:", error);
-      commit("setError", error);
-    }
   },
-  async confirmSignUp({ commit }, { username, code }) {
-    commit("setError", null);
-    try {
-      return await Auth.confirmSignUp(username, code);
-    } catch (error) {
-      commit("setError", error);
-      console.log("error confirming sign up", error);
-    }
+  async confirm({ rootState, commit }, { code }) {
+    const username = rootState.user.user.username;
+    await Auth.confirmSignUp(username, code)
+      .then(res => {
+        commit("setMessage", res, { root: true });
+      })
+      .catch(err => {
+        commit("setError", err, { root: true });
+      });
   },
-  async reSendSignUp({ commit }, { username }) {
-    commit("setError", null);
-    commit("setMessage", null);
-    console.log(username);
-    try {
-      const r = await Auth.resendSignUp(username);
-      commit("message", `Verification code sent`);
-      return r;
-    } catch (error) {
-      commit("setError", error);
-    }
+  async signIn({ redirect, commit }, { username, password }) {
+    await Auth.signIn(username, password)
+      .then(res => {
+        commit("setUser", res, { root: true });
+        commit("setAuth", true, { root: true });
+        $nuxt.$router.push("/");
+      })
+      .catch(err => {
+        commit("setError", err, { root: true });
+      });
   },
   async isAuthenticated({ commit }) {
     await Auth.currentAuthenticatedUser()
       .then(res => {
-        commit("setUser", res);
-        commit("isAuth", true);
+        commit("setUser", res, { root: true });
+        commit("setAuth", true, { root: true });
       })
-      .catch(() => {
-        commit("isAuth", false);
+      .catch(err => {
+        console.log(err);
       });
-    // await Auth.currentUserInfo().then((res) => {
-    //   commit("setUser", res);
-    // });
+  },
+  async signOut() {
+    await Auth.signOut();
+  },
+  async resendCode({ rootState, commit }) {
+    const username = rootState.user.user.username;
+    await Auth.resendSignUp(username)
+      .then(res => {
+        commit("setMessage", res, { root: true });
+      })
+      .catch(err => {
+        commit("setError", err, { root: true });
+      });
   }
 };

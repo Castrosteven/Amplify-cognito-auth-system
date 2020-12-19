@@ -1,7 +1,6 @@
 <template>
   <div>
-    <confirmation-component v-if="this.$store.state.auth.sentCode" />
-    <v-card v-else-if="!this.$store.state.auth.sentCode">
+    <v-card>
       <v-card-title>
         Register
       </v-card-title>
@@ -57,9 +56,7 @@
 </template>
 
 <script>
-import ConfirmationComponent from "./ConfirmationComponent.vue";
 export default {
-  components: { ConfirmationComponent },
   name: "RegisterComponent",
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
-      v-if="this.$store.state.auth.isAuthenticated"
+      v-if="isAuthenticated"
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -14,7 +14,7 @@
             Alloy
           </v-list-item-title>
           <v-list-item-subtitle>
-            {{ user }}
+            {{ user.username }}
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -33,18 +33,19 @@
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon
-        v-if="this.$store.state.auth.isAuthenticated"
+        v-if="isAuthenticated"
         @click.stop="drawer = !drawer"
       />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn @click="signOut" v-if="this.$store.state.auth.isAuthenticated">
+      <v-btn @click="signOut" v-if="isAuthenticated">
         Sign Out
       </v-btn>
       <v-btn to="/auth" v-else> Login </v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
+        <NotificationComponent />
         <nuxt />
       </v-container>
     </v-main>
@@ -67,7 +68,10 @@
 </template>
 
 <script>
+import NotificationComponent from "../components/NotificationComponent.vue";
+import { mapState } from "vuex";
 export default {
+  components: { NotificationComponent },
   beforeCreate() {
     this.$store.dispatch("auth/isAuthenticated");
   },
@@ -100,13 +104,13 @@ export default {
     };
   },
   computed: {
-    user() {
-      if (!this.$store.state.auth.isAuthenticated) {
-        return "";
-      } else {
-        return this.$store.state.auth.user.attributes.email;
-      }
-    }
+    // isAuthenticated() {
+    //   return this.$store.state.isAuthenticated;
+    // }
+    ...mapState({
+      isAuthenticated: state => state.isAuthenticated,
+      user: state => state.user
+    })
   },
   methods: {
     signOut() {
