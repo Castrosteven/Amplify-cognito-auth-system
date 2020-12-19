@@ -6,13 +6,16 @@
         <v-text-field
           filled
           label="Username"
-          :placeholder="user.username"
+          v-model="username"
+          :placeholder="attributes[2].Value"
         ></v-text-field>
         <v-text-field
           filled
           label="Email"
-          :placeholder="user.attributes.email"
+          v-model="email"
+          :placeholder="attributes[3].Value"
         ></v-text-field>
+
         <v-btn type="submit">Submit </v-btn>
       </v-form>
     </v-card-text>
@@ -21,17 +24,25 @@
 
 <script>
 import { Auth } from "aws-amplify";
+import { mapState } from "vuex";
 export default {
   name: "AccountSettings",
-
+  data() {
+    return {
+      username: "",
+      email: ""
+    };
+  },
   computed: {
-    user() {
-      return this.$store.state.user;
-    }
+    ...mapState("account", {
+      attributes: state => state.attributes
+    })
   },
   methods: {
     update() {
-      alert("clicked");
+      this.$store.dispatch("account/updateUserAttributes", {
+        username: this.username
+      });
     }
   }
 };

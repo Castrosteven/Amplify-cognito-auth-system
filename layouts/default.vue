@@ -14,7 +14,7 @@
             Alloy
           </v-list-item-title>
           <v-list-item-subtitle>
-            {{ user.username }}
+            {{ user.attributes["custom:username"] }}
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -74,6 +74,8 @@ export default {
   components: { NotificationComponent },
   beforeCreate() {
     this.$store.dispatch("auth/isAuthenticated");
+    if (this.$store.state.isAuthenticated)
+      this.$store.dispatch("account/userAttributes");
   },
   data() {
     return {
@@ -115,7 +117,6 @@ export default {
   methods: {
     signOut() {
       this.$store.dispatch("auth/signOut");
-      this.$router.go("/");
     }
   }
 };

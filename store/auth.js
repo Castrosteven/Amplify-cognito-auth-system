@@ -11,6 +11,7 @@ export const actions = {
         // email, // optional
         // phone_number, // optional - E.164 number convention
         // // other custom attributes
+        "custom:username": username
       }
     })
       .then(user => {
@@ -38,7 +39,7 @@ export const actions = {
         commit("setError", err, { root: true });
       });
   },
-  async signIn({ redirect, commit }, { username, password }) {
+  async signIn({ commit }, { username, password }) {
     await Auth.signIn(username, password)
       .then(res => {
         commit("setUser", res, { root: true });
@@ -60,7 +61,10 @@ export const actions = {
       });
   },
   async signOut() {
-    await Auth.signOut();
+    await Auth.signOut().then(() => {
+      $nuxt.$router.go();
+      $nuxt.$router.push("/");
+    });
   },
   async resendCode({ rootState, commit }) {
     const username = rootState.user.user.username;
