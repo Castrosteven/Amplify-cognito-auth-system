@@ -70,7 +70,7 @@ export const actions = {
   async resendCode({ commit }, { username }) {
     await Auth.resendSignUp(username)
       .then(res => {
-        commit("setMessage", res.message, { root: true });
+        commit("setMessage", `Sent Verification Code`, { root: true });
       })
       .catch(err => {
         commit("setError", err.message, { root: true });
@@ -79,7 +79,9 @@ export const actions = {
   async forgotPassword({ commit }, { username }) {
     await Auth.forgotPassword(username)
       .then(() => {
-        commit("setMessage", `Sent Verification Code`, { root: true });
+        commit("setMessage", `Sent Verification Code to ${usernames}`, {
+          root: true
+        });
       })
       .catch(err => {
         console.log(err);
