@@ -45,15 +45,16 @@ export default {
     }
   },
   methods: {
-    confirm() {
-      try {
-        if (this.$refs.form.validate())
-          this.$store.dispatch("auth/confirm", {
+    async confirm() {
+      if (this.$refs.form.validate()) {
+        try {
+          await this.$store.dispatch("auth/confirm", {
             username: this.email,
             code: this.code
           });
-        this.$router.go();
-      } catch (error) {}
+          this.$router.go();
+        } catch (error) {}
+      }
     },
     resendCode() {
       this.$store.dispatch("auth/resendCode", { username: this.email });

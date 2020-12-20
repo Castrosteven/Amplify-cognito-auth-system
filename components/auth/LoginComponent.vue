@@ -86,8 +86,12 @@ export default {
         });
       const err = this.$store.state.error;
       if (err === "User is not confirmed.") {
-        this.$store.dispatch("auth/resendCode", { username: this.email });
-        this.confirmLogin = true;
+        try {
+          await this.$store.dispatch("auth/resendCode", {
+            username: this.email
+          });
+          this.confirmLogin = true;
+        } catch (error) {}
       }
     },
     forgotSwitch() {
