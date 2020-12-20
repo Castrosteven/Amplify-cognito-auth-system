@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-card>
+    <ConfirmationComponent v-if="confirmLogin" :email="email" />
+    <v-card v-else>
       <v-card-title>Login</v-card-title>
       <v-card-text>
         <v-form
@@ -50,8 +51,12 @@
 </template>
 
 <script>
+import ConfirmationComponent from "@/components/auth/ConfirmationComponent";
 export default {
   name: "LoginComponent",
+  components: {
+    ConfirmationComponent
+  },
   data() {
     return {
       value: "",
@@ -65,19 +70,25 @@ export default {
           v => /.+@.+\..+/.test(v) || "E-mail must be valid"
         ],
         passwordRules: [value => !!value || "Please type password."]
-      }
+      },
+      confirmLogin: false
     };
   },
   methods: {
     sendSwitchSignal() {
       this.$emit("switch");
     },
-    login() {
+    async login() {
       if (this.$refs.form.validate())
-        this.$store.dispatch("auth/signIn", {
+        await this.$store.dispatch("auth/signIn", {
           username: this.email,
           password: this.password
         });
+      const err = this.$store.state.error;
+      if (err === "User is not confirmed.") {
+        this.$store.dispatch("auth/resendCode", { username: this.email });
+        this.confirmLogin = true;
+      }
     },
     forgotSwitch() {
       this.$emit("forgot");

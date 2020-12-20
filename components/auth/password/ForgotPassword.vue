@@ -1,10 +1,11 @@
 <template>
   <div>
-    <forgot-password-confirmation v-if="confirmation" />
-    <v-card v-else>
+    <v-card>
       <v-card-title>Forgot Password</v-card-title>
       <v-card-text>
+        <ForgotPasswordConfirm v-if="confirmation" :username="username" />
         <v-form
+          v-else
           @submit.prevent="forgotPassword"
           lazy-validation
           v-model="valid"
@@ -28,13 +29,15 @@
 </template>
 
 <script>
-import ForgotPasswordConfirmation from "@/components/auth/password/ForgotPasswordConfirmation";
-
+import ForgotPasswordConfirm from "./ForgotPasswordConfirm";
 export default {
   name: "ForgotPassword",
-  components: { ForgotPasswordConfirmation },
+  components: {
+    ForgotPasswordConfirm
+  },
   data() {
     return {
+      code: "",
       valid: true,
       username: "",
       confirmation: false,
@@ -47,10 +50,20 @@ export default {
     };
   },
   methods: {
-    forgotPassword() {
+    async forgotPassword() {
       if (this.$refs.form.validate())
-        this.$store.dispatch("auth/forgotPassword", {
-          username: this.username
+        try {
+          await this.$store.dispatch("auth/forgotPassword", {
+            username: this.username
+          });
+          this.confirmation = true;
+        } catch (error) {}
+    },
+    confirm() {
+      if (this.form.$refs.validate())
+        this.$store.dispatch("auth/confirmPasswordReset", {
+          username: this.username,
+          code: this.code
         });
     },
     forgotSwitch() {

@@ -4,54 +4,51 @@ export const state = () => ({});
 export const mutations = {};
 export const actions = {
   async signUp({ commit }, { username, password }) {
-    await Auth.signUp({
-      username,
-      password,
-      attributes: {
-        // email, // optional
-        // phone_number, // optional - E.164 number convention
-        // // other custom attributes
-        "custom:username": username
-      }
-    })
-      .then(user => {
-        commit("setUser", user, { root: true });
-        if (user.userConfirmed == false)
-          commit(
-            "setMessage",
-            `Verification code sent to ${user.codeDeliveryDetails.Destination}`,
-            {
-              root: true
-            }
-          );
-      })
-      .catch(err => {
-        commit("setError", err.message, { root: true });
+    try {
+      const user = await Auth.signUp({
+        username,
+        password,
+        attributes: {
+          "custom:username": username
+        }
       });
+      commit("setUser", user, { root: true });
+      if (user.userConfirmed == false)
+        commit(
+          "setMessage",
+          `Verification code sent to ${user.codeDeliveryDetails.Destination}`,
+          {
+            root: true
+          }
+        );
+      return user;
+    } catch (error) {
+      commit("setError", error.message, { root: true });
+      return error;
+    }
   },
-  async confirm({ rootState, commit }, { code }) {
-    const username = rootState.user.user.username;
+  async confirm({ commit }, { username, code }) {
     await Auth.confirmSignUp(username, code)
       .then(res => {
+        console.log(res);
         commit("setMessage", res, { root: true });
       })
       .catch(err => {
-        commit("setError", err, { root: true });
+        console.log(err);
+        commit("setError", err.message, { root: true });
       });
   },
   async signIn({ commit }, { username, password }) {
-    await Auth.signIn(username, password)
-      .then(user => {
-        commit("setUser", user, { root: true });
-        commit("setAuth", true, { root: true });
-        $nuxt.$router.push("/");
-      })
-      .catch(error => {
-        console.log(error);
-        commit("setError", error.message, { root: true });
-        if (error.code == "UserNotConfirmedException")
-          commit("needsConfirmation", true, { root: true });
-      });
+    try {
+      const user = await Auth.signIn(username, password);
+      commit("setUser", user, { root: true });
+      commit("setAuth", true, { root: true });
+      $nuxt.$router.push("/");
+      return user;
+    } catch (error) {
+      commit("setError", error.message, { root: true });
+      return error;
+    }
   },
   async isAuthenticated({ commit }) {
     try {
@@ -70,14 +67,13 @@ export const actions = {
       $nuxt.$router.push("/");
     });
   },
-  async resendCode({ rootState, commit }) {
-    const username = rootState.user.user.username;
+  async resendCode({ commit }, { username }) {
     await Auth.resendSignUp(username)
       .then(res => {
-        commit("setMessage", res, { root: true });
+        commit("setMessage", res.message, { root: true });
       })
       .catch(err => {
-        commit("setError", err, { root: true });
+        commit("setError", err.message, { root: true });
       });
   },
   async forgotPassword({ commit }, { username }) {
@@ -87,6 +83,15 @@ export const actions = {
       })
       .catch(err => {
         console.log(err);
+        commit("setError", err.message, { root: true });
+      });
+  },
+  async forgotPasswordSubmit({ commit }, { username, code, password }) {
+    await Auth.forgotPasswordSubmit(username, code, password)
+      .then(() => {
+        commit("setMessage", `Changed Password Succesfully`, { root: true });
+      })
+      .catch(err => {
         commit("setError", err.message, { root: true });
       });
   }

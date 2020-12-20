@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-card>
+    <ConfirmationComponent v-if="sentCode" :email="email" />
+    <v-card v-else>
       <v-card-title>
         Register
       </v-card-title>
@@ -56,6 +57,7 @@
 </template>
 
 <script>
+import ConfirmationComponent from "./ConfirmationComponent";
 export default {
   name: "RegisterComponent",
   data() {
@@ -81,7 +83,8 @@ export default {
             value === this.password ||
             "The password confirmation does not match."
         ]
-      }
+      },
+      sentCode: false
     };
   },
   methods: {
@@ -90,10 +93,14 @@ export default {
     },
     register() {
       if (this.$refs.form.validate())
-        this.$store.dispatch("auth/signUp", {
-          username: this.email,
-          password: this.password
-        });
+        this.$store
+          .dispatch("auth/signUp", {
+            username: this.email,
+            password: this.password
+          })
+          .then(({ user }) => {
+            if (user) this.sentCode = true;
+          });
     }
   }
 };

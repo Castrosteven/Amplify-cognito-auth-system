@@ -9,7 +9,7 @@
       >
         <v-text-field
           type="number"
-          placeholder="Enter Verification Code"
+          :placeholder="msg"
           v-model="code"
           :rules="rules"
           counter="6"
@@ -26,6 +26,9 @@
 <script>
 export default {
   name: "ConfirmationComponent",
+  props: {
+    email: String
+  },
   data() {
     return {
       valid: false,
@@ -36,13 +39,24 @@ export default {
       ]
     };
   },
-  computed: {},
+  computed: {
+    msg() {
+      return `Enter Verfication Code Emailed to ${this.email}`;
+    }
+  },
   methods: {
     confirm() {
-      this.$store.dispatch("auth/confirm", { code: this.code });
+      try {
+        if (this.$refs.form.validate())
+          this.$store.dispatch("auth/confirm", {
+            username: this.email,
+            code: this.code
+          });
+        this.$router.go();
+      } catch (error) {}
     },
     resendCode() {
-      this.$store.dispatch("auth/resendCode");
+      this.$store.dispatch("auth/resendCode", { username: this.email });
     }
   }
 };

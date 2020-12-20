@@ -3,41 +3,30 @@
     <v-row justify="center">
       <v-col cols="12" md="8">
         <login-component
-          v-if="
-            !registerComponent &&
-              !forgot &&
-              !needsConfirmation &&
-              !userConfirmed
-          "
+          v-if="!registerComponent && !forgot"
           @switch="switchComponents"
           @forgot="switchToForgot"
         />
         <register-component
-          v-else-if="registerComponent && !forgot && !userConfirmed"
+          v-else-if="registerComponent"
           @switch="switchComponents"
         />
-        <confirmation-component v-if="userConfirmed == false" />
-        <forgot-password v-if="forgot" @forgot="switchToForgot" />
-        <login-not-confirmed-code v-if="needsConfirmation" />
+        <forgot-password @forgot="switchToForgot" v-if="forgot" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import LoginComponent from "@/components/auth/login/LoginComponent.vue";
-import LoginNotConfirmedCode from "@/components/auth/login/LoginNotConfirmedCode.vue";
-import RegisterComponent from "@/components/auth/register/RegisterComponent.vue";
-import ConfirmationComponent from "@/components/auth/register/ConfirmationComponent.vue";
+import LoginComponent from "@/components/auth/LoginComponent.vue";
+import RegisterComponent from "@/components/auth/RegisterComponent.vue";
 import ForgotPassword from "@/components/auth/password/ForgotPassword.vue";
 
 export default {
   components: {
     LoginComponent,
     RegisterComponent,
-    ConfirmationComponent,
-    ForgotPassword,
-    LoginNotConfirmedCode
+    ForgotPassword
   },
   name: "Auth",
   data() {
@@ -52,9 +41,6 @@ export default {
     },
     needsConfirmation() {
       return this.$store.state.needsConfirmation;
-    },
-    userConfirmed() {
-      return this.$store.state.user.userConfirmed;
     }
   },
   methods: {
