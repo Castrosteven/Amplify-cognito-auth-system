@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-alert v-if="message" type="success">
-      {{ message }}
+    <v-alert v-if="msg !== null" type="success">
+      {{ msg }}
     </v-alert>
-    <v-alert v-else-if="error" type="error">
-      {{ error.message }}
+    <v-alert v-else-if="error !== null" type="error">
+      {{ error }}
     </v-alert>
   </div>
 </template>
@@ -13,11 +13,20 @@
 import { mapState } from "vuex";
 export default {
   name: "NotificationComponent",
-  computed: {
-    ...mapState({
-      message: state => state.msg,
-      error: state => state.error
-    })
+  computed: mapState(["msg", "error"]),
+  watch: {
+    msg(old, neww) {
+      if (old != "")
+        setTimeout(() => {
+          this.$store.commit("setMessage", null);
+        }, 5000);
+    },
+    error(old, neww) {
+      if (old != "")
+        setTimeout(() => {
+          this.$store.commit("setError", null);
+        }, 5000);
+    }
   }
 };
 </script>

@@ -1,22 +1,22 @@
 <template>
-  <v-card>
-    <v-card-title>Account Settings</v-card-title>
+  <v-card flat>
+    <v-card-title>Edit Account Settings</v-card-title>
     <v-card-text>
-      <v-form @submit.prevent="update">
+      <v-form
+        @submit.prevent="update"
+        lazy-validation
+        v-model="valid"
+        ref="form"
+      >
         <v-text-field
           filled
           label="Username"
           v-model="username"
           :placeholder="attributes[2].Value"
-        ></v-text-field>
-        <v-text-field
-          filled
-          label="Email"
-          v-model="email"
-          :placeholder="attributes[3].Value"
+          :rules="rules.usernameRules"
         ></v-text-field>
 
-        <v-btn type="submit">Submit </v-btn>
+        <v-btn type="submit" :disabled="!valid" color="primary">Edit </v-btn>
       </v-form>
     </v-card-text>
   </v-card>
@@ -27,22 +27,30 @@ import { Auth } from "aws-amplify";
 import { mapState } from "vuex";
 export default {
   name: "AccountSettings",
+  beforeMount() {
+    this.$store.dispatch("account/userAttributes");
+  },
   data() {
     return {
+      valid: true,
       username: "",
-      email: ""
+      rules: {
+        usernameRules: [v => !!v || "Username is required"]
+      }
     };
   },
   computed: {
-    ...mapState("account", {
+    ...mapState({
       attributes: state => state.attributes
     })
   },
   methods: {
     update() {
-      this.$store.dispatch("account/updateUserAttributes", {
-        username: this.username
-      });
+      if (this.$refs.form.validate())
+        this.$store.dispatch("account/updateUserAttributes", {
+          username: this.username
+        });
+      this.username = "";
     }
   }
 };

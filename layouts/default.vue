@@ -74,8 +74,6 @@ export default {
   components: { NotificationComponent },
   beforeCreate() {
     this.$store.dispatch("auth/isAuthenticated");
-    if (this.$store.state.isAuthenticated)
-      this.$store.dispatch("account/userAttributes");
   },
   data() {
     return {

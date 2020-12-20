@@ -1,13 +1,17 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col cols="12">
-        <AccountSettings />
-      </v-col>
-      <v-col>
-        <ResetPassword />
-      </v-col>
-    </v-row>
+    <v-card>
+      <v-tabs v-model="tab" background-color="primary" dark>
+        <v-tab v-for="item in items" :key="item.tab">
+          {{ item.tab }}
+        </v-tab>
+      </v-tabs>
+      <v-tabs-items v-model="tab">
+        <v-tab-item v-for="item in items" :key="item.tab">
+          <component v-bind:is="item.content"></component>
+        </v-tab-item>
+      </v-tabs-items>
+    </v-card>
   </v-container>
 </template>
 
@@ -17,7 +21,16 @@ import ResetPassword from "@/components/settings/ResetPassword.vue";
 
 export default {
   name: "settings",
+  data() {
+    return {
+      tab: null,
 
+      items: [
+        { tab: "Account", content: "AccountSettings" },
+        { tab: "Password", content: "ResetPassword" }
+      ]
+    };
+  },
   components: {
     AccountSettings,
     ResetPassword

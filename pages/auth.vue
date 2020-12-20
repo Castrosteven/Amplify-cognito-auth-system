@@ -3,14 +3,21 @@
     <v-row justify="center">
       <v-col cols="12" md="8">
         <login-component
-          v-if="!registerComponent && !isAuthenticated && confirmed == null"
+          v-if="
+            !registerComponent &&
+              !isAuthenticated &&
+              confirmed == null &&
+              !forgot
+          "
           @switch="switchComponents"
+          @forgot="switchToForgot"
         />
         <register-component
           v-else-if="registerComponent && !isAuthenticated && confirmed == null"
           @switch="switchComponents"
         />
-        <ConfirmationComponent v-if="confirmed == false" />
+        <confirmation-component v-if="confirmed == false" />
+        <forgot-password v-if="forgot" @forgot="switchToForgot" />
       </v-col>
     </v-row>
   </v-container>
@@ -20,13 +27,20 @@
 import LoginComponent from "@/components/auth/LoginComponent.vue";
 import RegisterComponent from "@/components/auth/RegisterComponent.vue";
 import ConfirmationComponent from "@/components/auth/ConfirmationComponent.vue";
+import ForgotPassword from "@/components/auth/password/ForgotPassword.vue";
 
 export default {
-  components: { LoginComponent, RegisterComponent, ConfirmationComponent },
+  components: {
+    LoginComponent,
+    RegisterComponent,
+    ConfirmationComponent,
+    ForgotPassword
+  },
   name: "Auth",
   data() {
     return {
-      registerComponent: false
+      registerComponent: false,
+      forgot: false
     };
   },
   computed: {
@@ -40,6 +54,9 @@ export default {
   methods: {
     switchComponents() {
       this.registerComponent = !this.registerComponent;
+    },
+    switchToForgot() {
+      this.forgot = !this.forgot;
     }
   }
 };

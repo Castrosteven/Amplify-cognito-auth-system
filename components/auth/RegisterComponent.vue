@@ -89,12 +89,11 @@ export default {
       this.$emit("switch");
     },
     register() {
-      this.$refs.form.validate()
-        ? this.$store.dispatch("auth/signUp", {
-            username: this.email,
-            password: this.password
-          })
-        : null;
+      if (this.$refs.form.validate())
+        this.$store.dispatch("auth/signUp", {
+          username: this.email,
+          password: this.password
+        });
     }
   }
 };

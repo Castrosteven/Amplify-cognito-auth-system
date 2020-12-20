@@ -32,9 +32,18 @@
         </v-form>
       </v-card-text>
       <v-card-actions>
-        <p @click="sendSwitchSignal">
-          Don't have an account? Register
-        </p>
+        <v-container>
+          <v-row>
+            <v-col>
+              <p @click="sendSwitchSignal">
+                Don't have an account? Register
+              </p>
+            </v-col>
+            <v-col>
+              <p @click="forgotSwitch">Forgot Password</p>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card-actions>
     </v-card>
   </div>
@@ -48,7 +57,7 @@ export default {
       value: "",
       email: "",
       password: "",
-      userNotConfirmedError: false,
+
       valid: true,
       rules: {
         emailRules: [
@@ -69,6 +78,9 @@ export default {
           username: this.email,
           password: this.password
         });
+    },
+    forgotSwitch() {
+      this.$emit("forgot");
     }
   }
 };

@@ -26,7 +26,7 @@ export const actions = {
           );
       })
       .catch(err => {
-        commit("setError", err, { root: true });
+        commit("setError", err.message, { root: true });
       });
   },
   async confirm({ rootState, commit }, { code }) {
@@ -41,29 +41,39 @@ export const actions = {
   },
   async signIn({ commit }, { username, password }) {
     await Auth.signIn(username, password)
-      .then(res => {
-        commit("setUser", res, { root: true });
+      .then(user => {
+        commit("setUser", user, { root: true });
         commit("setAuth", true, { root: true });
         $nuxt.$router.push("/");
       })
-      .catch(err => {
-        commit("setError", err, { root: true });
+      .catch(error => {
+        commit("setError", error.message, { root: true });
+        if (error.code == "UserNotConfirmedException")
+          commit("notConfirmed", true, { root: true });
       });
   },
   async isAuthenticated({ commit }) {
-    await Auth.currentAuthenticatedUser()
-      .then(res => {
-        commit("setUser", res, { root: true });
-        commit("setAuth", true, { root: true });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      commit("setUser", user, { root: true });
+      commit("setAuth", true, { root: true });
+      await Auth.userAttributes(user)
+        .then(res => {
+          commit("setAttributes", res, { root: true });
+          // console.log(res);
+        })
+        .catch(err => {
+          commit("setError", err, { root: true });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   },
   async signOut() {
-    await Auth.signOut().then(() => {
+    await Auth.signOut({ global: true }).then(() => {
       $nuxt.$router.go();
       $nuxt.$router.push("/");
+      window.localStorage.clear();
     });
   },
   async resendCode({ rootState, commit }) {
@@ -74,6 +84,17 @@ export const actions = {
       })
       .catch(err => {
         commit("setError", err, { root: true });
+      });
+  },
+  async forgotPassword({ commit }, { username }) {
+    console.log(username);
+    await Auth.forgotPassword(username)
+      .then(() => {
+        commit("setMessage", `Sent Verification Code`, { root: true });
+      })
+      .catch(err => {
+        console.log(err);
+        commit("setError", err.message, { root: true });
       });
   }
 };

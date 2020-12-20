@@ -10,7 +10,11 @@
 
 <script>
 export default {
-  name: "Home"
+  name: "Home",
+  beforeCreate() {
+    if (this.$store.state.isAuthenticated)
+      this.$store.dispatch("account/userAttributes");
+  }
 };
 </script>
 
