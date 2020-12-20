@@ -7,7 +7,7 @@ export const actions = {
     const user = await Auth.currentAuthenticatedUser();
     await Auth.changePassword(user, oldPassword, newPassword)
       .then(() => {
-        commit("setMessage", "Password Changed Succesfully", {
+        commit("setMessage", "Password Changed Successfully", {
           root: true
         });
       })
@@ -16,8 +16,8 @@ export const actions = {
         commit("setError", err.message, { root: true });
       });
   },
-  async updateUserAttributes({ rootState, commit }, { username }) {
-    const user = rootState.user;
+  async updateUserAttributes({  commit }, { username }) {
+    const user = await Auth.currentAuthenticatedUser()
     await Auth.updateUserAttributes(user, {
       "custom:username": username
     })

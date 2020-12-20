@@ -4,7 +4,7 @@
     <v-card-text>
       <v-form
         @submit.prevent="update"
-        lazy-validation
+
         v-model="valid"
         ref="form"
       >
@@ -12,8 +12,10 @@
           filled
           label="Username"
           v-model="username"
-          :placeholder="attributes[2].Value"
+          :placeholder="user.attributes['custom:username']"
           :rules="rules.usernameRules"
+
+
         ></v-text-field>
 
         <v-btn type="submit" :disabled="!valid" color="primary">Edit </v-btn>
@@ -23,14 +25,15 @@
 </template>
 
 <script>
-import { Auth } from "aws-amplify";
+
 import { mapState } from "vuex";
 export default {
+
   name: "AccountSettings",
   data() {
     return {
       valid: true,
-      username: "",
+      username:'',
       rules: {
         usernameRules: [v => !!v || "Username is required"]
       }
@@ -38,19 +41,20 @@ export default {
   },
   computed: {
     ...mapState({
-      attributes: state => state.attributes
-    })
+      user:state => state.user
+    }),
   },
   methods: {
-    update() {
+      update() {
       if (this.$refs.form.validate())
         this.$store.dispatch("account/updateUserAttributes", {
           username: this.username
         });
-      this.username = "";
+
     }
   }
 };
+
 </script>
 
 <style lang="scss" scoped></style>
