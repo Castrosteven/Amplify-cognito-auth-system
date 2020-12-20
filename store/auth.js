@@ -74,6 +74,7 @@ export const actions = {
     await Auth.signOut({ global: true }).then(() => {
       $nuxt.$router.go();
       $nuxt.$router.push("/");
+      window.localStorage.clear();
     });
   },
   async resendCode({ rootState, commit }) {
