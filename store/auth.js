@@ -45,12 +45,12 @@ export const actions = {
         commit("setUser", user, { root: true });
         commit("setAuth", true, { root: true });
         $nuxt.$router.push("/");
-
       })
       .catch(error => {
+        console.log(error);
         commit("setError", error.message, { root: true });
         if (error.code == "UserNotConfirmedException")
-          commit("notConfirmed", true, { root: true });
+          commit("needsConfirmation", true, { root: true });
       });
   },
   async isAuthenticated({ commit }) {
@@ -58,7 +58,7 @@ export const actions = {
       const user = await Auth.currentAuthenticatedUser();
       commit("setUser", user, { root: true });
       commit("setAuth", true, { root: true });
-      return user
+      return user;
     } catch (error) {
       commit("setAuth", false, { root: true });
       console.log(error);
@@ -68,7 +68,6 @@ export const actions = {
     await Auth.signOut({ global: true }).then(() => {
       $nuxt.$router.go();
       $nuxt.$router.push("/");
-      window.localStorage.clear();
     });
   },
   async resendCode({ rootState, commit }) {
@@ -82,7 +81,6 @@ export const actions = {
       });
   },
   async forgotPassword({ commit }, { username }) {
-    console.log(username);
     await Auth.forgotPassword(username)
       .then(() => {
         commit("setMessage", `Sent Verification Code`, { root: true });

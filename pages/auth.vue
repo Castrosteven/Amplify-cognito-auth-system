@@ -5,28 +5,30 @@
         <login-component
           v-if="
             !registerComponent &&
-              !isAuthenticated &&
-              confirmed == null &&
-              !forgot
+              !forgot &&
+              !needsConfirmation &&
+              !userConfirmed
           "
           @switch="switchComponents"
           @forgot="switchToForgot"
         />
         <register-component
-          v-else-if="registerComponent && !isAuthenticated && confirmed == null"
+          v-else-if="registerComponent && !forgot && !userConfirmed"
           @switch="switchComponents"
         />
-        <confirmation-component v-if="confirmed == false" />
+        <confirmation-component v-if="userConfirmed == false" />
         <forgot-password v-if="forgot" @forgot="switchToForgot" />
+        <login-not-confirmed-code v-if="needsConfirmation" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import LoginComponent from "@/components/auth/LoginComponent.vue";
-import RegisterComponent from "@/components/auth/RegisterComponent.vue";
-import ConfirmationComponent from "@/components/auth/ConfirmationComponent.vue";
+import LoginComponent from "@/components/auth/login/LoginComponent.vue";
+import LoginNotConfirmedCode from "@/components/auth/login/LoginNotConfirmedCode.vue";
+import RegisterComponent from "@/components/auth/register/RegisterComponent.vue";
+import ConfirmationComponent from "@/components/auth/register/ConfirmationComponent.vue";
 import ForgotPassword from "@/components/auth/password/ForgotPassword.vue";
 
 export default {
@@ -34,7 +36,8 @@ export default {
     LoginComponent,
     RegisterComponent,
     ConfirmationComponent,
-    ForgotPassword
+    ForgotPassword,
+    LoginNotConfirmedCode
   },
   name: "Auth",
   data() {
@@ -47,7 +50,10 @@ export default {
     isAuthenticated() {
       return this.$store.state.isAuthenticated;
     },
-    confirmed() {
+    needsConfirmation() {
+      return this.$store.state.needsConfirmation;
+    },
+    userConfirmed() {
       return this.$store.state.user.userConfirmed;
     }
   },

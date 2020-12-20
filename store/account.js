@@ -16,8 +16,8 @@ export const actions = {
         commit("setError", err.message, { root: true });
       });
   },
-  async updateUserAttributes({  commit }, { username }) {
-    const user = await Auth.currentAuthenticatedUser()
+  async updateUserAttributes({ dispatch, commit }, { username }) {
+    const user = await Auth.currentAuthenticatedUser();
     await Auth.updateUserAttributes(user, {
       "custom:username": username
     })
@@ -27,5 +27,6 @@ export const actions = {
       .catch(err => {
         commit("setError", err, { root: true });
       });
+    await dispatch("auth/isAuthenticated", {}, { root: true });
   }
 };

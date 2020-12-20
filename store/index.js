@@ -4,7 +4,7 @@ export const state = () => ({
   user: {},
   isAuthenticated: false,
   attributes: [],
-  notConfirmed: false
+  needsConfirmation: false
 });
 export const mutations = {
   setMessage(state, msg) {
@@ -22,7 +22,7 @@ export const mutations = {
   setAttributes(state, attributes) {
     state.attributes = attributes;
   },
-  notConfirmed(state, bool) {
-    state.notConfirmed = bool;
+  needsConfirmation(state, bool) {
+    state.needsConfirmation = bool;
   }
 };
