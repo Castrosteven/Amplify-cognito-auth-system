@@ -1,3 +1,4 @@
+import { Auth } from "aws-amplify";
 export default function({ route, store, redirect }) {
   // If the user is not authenticated
   const authPage = route.name == "auth";
@@ -6,5 +7,8 @@ export default function({ route, store, redirect }) {
   console.log(isAuth);
   if (isAuth == false && !authPage) {
     return redirect("/auth");
+  }
+  if (isAuth && authPage) {
+    return redirect("/");
   }
 }

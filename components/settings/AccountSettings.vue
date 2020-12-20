@@ -27,9 +27,6 @@ import { Auth } from "aws-amplify";
 import { mapState } from "vuex";
 export default {
   name: "AccountSettings",
-  beforeMount() {
-    this.$store.dispatch("account/userAttributes");
-  },
   data() {
     return {
       valid: true,

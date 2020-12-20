@@ -45,6 +45,14 @@ export const actions = {
         commit("setUser", user, { root: true });
         commit("setAuth", true, { root: true });
         $nuxt.$router.push("/");
+        Auth.userAttributes(user)
+          .then(res => {
+            commit("setAttributes", res, { root: true });
+            // console.log(res);
+          })
+          .catch(err => {
+            commit("setError", err, { root: true });
+          });
       })
       .catch(error => {
         commit("setError", error.message, { root: true });
@@ -57,15 +65,8 @@ export const actions = {
       const user = await Auth.currentAuthenticatedUser();
       commit("setUser", user, { root: true });
       commit("setAuth", true, { root: true });
-      await Auth.userAttributes(user)
-        .then(res => {
-          commit("setAttributes", res, { root: true });
-          // console.log(res);
-        })
-        .catch(err => {
-          commit("setError", err, { root: true });
-        });
     } catch (error) {
+      commit("setAuth", false, { root: true });
       console.log(error);
     }
   },
@@ -73,7 +74,6 @@ export const actions = {
     await Auth.signOut({ global: true }).then(() => {
       $nuxt.$router.go();
       $nuxt.$router.push("/");
-      window.localStorage.clear();
     });
   },
   async resendCode({ rootState, commit }) {
