@@ -1,10 +1,16 @@
 <template>
-  <div></div>
+  <div>
+    <Todo />
+  </div>
 </template>
 
 <script>
+import Todo from "@/components/dashboard/Todo";
 export default {
-  name: "Dashboard"
+  name: "Dashboard",
+  components: {
+    Todo
+  }
 };
 </script>
 

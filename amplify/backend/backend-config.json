@@ -6,5 +6,30 @@
       "dependsOn": [],
       "customAuth": false
     }
+  },
+  "api": {
+    "alloy": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 365,
+              "description": "Alloy"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authalloy55762637"
+              }
+            }
+          ]
+        }
+      }
+    }
   }
 }
