@@ -1,5 +1,6 @@
 # Authentication with Amplify, Vuex 2, Vuetify and Nuxt
 # Demo : https://webdevs.nyc
+# Blog Post: https://castrosteven.com/2020/12/14/building-a-serverless-spa-with-vue-js-and-amplify/
 
 ## Build Setup
 
