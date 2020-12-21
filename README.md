@@ -1,4 +1,5 @@
-# alloy
+# Authentication with Amplify, Vuex 2, Vuetify and Nuxt
+# Demo : https://webdevs.nyc
 
 ## Build Setup
 
