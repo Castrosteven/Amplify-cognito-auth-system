@@ -77,9 +77,11 @@ export const actions = {
       });
   },
   async forgotPassword({ commit }, { username }) {
+    console.log("ran");
+    console.log(typeof username);
     await Auth.forgotPassword(username)
       .then(() => {
-        commit("setMessage", `Sent Verification Code to ${usernames}`, {
+        commit("setMessage", `Sent Verification Code to ${username}`, {
           root: true
         });
       })

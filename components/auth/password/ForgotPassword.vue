@@ -50,14 +50,13 @@ export default {
     };
   },
   methods: {
-    async forgotPassword() {
-      if (this.$refs.form.validate())
-        try {
-          await this.$store.dispatch("auth/forgotPassword", {
-            username: this.username
-          });
-          this.confirmation = true;
-        } catch (error) {}
+    forgotPassword() {
+      if (this.$refs.form.validate()) {
+        this.$store.dispatch("auth/forgotPassword", {
+          username: this.username
+        });
+        this.confirmation = true;
+      }
     },
     confirm() {
       if (this.form.$refs.validate())
