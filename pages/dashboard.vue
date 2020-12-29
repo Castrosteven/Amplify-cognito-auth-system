@@ -1,14 +1,20 @@
 <template>
-  <v-container fill-height>
-    <v-row>
-      <v-col cols="6">
-        <Generator />
-      </v-col>
-      <v-col cols="6">
-        <editor />
-      </v-col>
-    </v-row>
-  </v-container>
+  <section>
+    <v-container fill-height>
+      <v-row justify="center">
+        <v-col cols="12">
+          <Generator />
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container fill-height>
+      <v-row justify="center">
+        <v-col cols="12">
+          <editor />
+        </v-col>
+      </v-row>
+    </v-container>
+  </section>
 </template>
 
 <script>

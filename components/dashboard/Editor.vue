@@ -1,18 +1,15 @@
 <template>
-  <div class="example">
-    <client-only>
-      <codemirror
-        class="codemirror"
-        v-model="code"
-        :options="cmOption"
-        @cursorActivity="onCmCursorActivity"
-        @ready="onCmReady"
-        @focus="onCmFocus"
-        @blur="onCmBlur"
-      />
-    </client-only>
-    <pre class="pre">{{ code }}</pre>
-  </div>
+  <client-only>
+    <codemirror
+      class="codemirror"
+      v-model="code"
+      :options="cmOption"
+      @cursorActivity="onCmCursorActivity"
+      @ready="onCmReady"
+      @focus="onCmFocus"
+      @blur="onCmBlur"
+    />
+  </client-only>
 </template>
 
 <script>
@@ -71,24 +68,4 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-/* .example {
-  display: flex;
-  height: 100%;
-  .codemirror,
-  .pre {
-    width: 50%;
-    height: 100%;
-    margin: 0;
-    overflow: auto;
-  }
-  .pre {
-    display: block;
-    padding: 1rem;
-    font-size: font-size-small;
-    line-height: 1.6;
-    word-break: break-all;
-    word-wrap: break-word;
-  }
-} */
-</style>
+<style lang="css" scoped></style>
