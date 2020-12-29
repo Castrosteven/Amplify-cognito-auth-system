@@ -7,7 +7,7 @@
             "ConflictDetection": "VERSION"
         },
         "models": {
-            "Todo": {
+            "Post": {
                 "ConflictHandler": "AUTOMERGE",
                 "ConflictDetection": "VERSION"
             }

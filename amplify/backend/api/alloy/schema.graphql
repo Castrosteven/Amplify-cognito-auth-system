@@ -1,15 +1,12 @@
-type Todo
-  @model
-  @auth(
-    rules: [
-      {
-        allow: owner
-        ownerField: "owner"
-        operations: [create, update, delete, read]
-      }
-    ]
-  ) {
+type Post @model {
   id: ID!
-  name: String!
-  description: String
+  title: String!
+  status: PostStatus!
+  rating: Int
+  content: String
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
 }

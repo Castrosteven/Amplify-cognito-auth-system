@@ -17,10 +17,15 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [],
+  css: [
+    // ...
+    'codemirror/lib/codemirror.css',
+    'codemirror/theme/base16-dark.css',
+    // more styles...
+  ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [{ src: '~/plugins/amplify.js', mode: 'client' }, '~/plugins/auth'],
+  plugins: [{ src: '~plugins/nuxt-codemirror-plugin.js', ssr: false },{ src: '~/plugins/amplify.js', mode: 'client' }, '~/plugins/auth'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
