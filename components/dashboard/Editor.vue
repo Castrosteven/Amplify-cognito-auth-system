@@ -2,7 +2,7 @@
   <client-only>
     <codemirror
       class="codemirror"
-      v-model="code"
+      :v-model="code"
       :options="cmOption"
       @cursorActivity="onCmCursorActivity"
       @ready="onCmReady"
@@ -13,9 +13,11 @@
 </template>
 
 <script>
-import dedent from "dedent";
 export default {
   name: "Editor",
+  props: {
+    code: String
+  },
   data() {
     return {
       cmOption: {
@@ -23,32 +25,9 @@ export default {
         styleActiveLine: true,
         lineNumbers: true,
         line: true,
-        mode: "text/x-vue",
+        mode: "javascript",
         theme: "base16-dark"
-      },
-      code: dedent`
-          <template>
-            <main>
-              <h1>Hello World!</h1>
-              <p>{{ message }}</p>
-            </main>
-          </template>
-          <script>
-            export default {
-              data() {
-                return {
-                  message: 'Hi!'
-                }
-              }
-            }
-          ${"<\/script>"}
-          <style lang="scss">
-            @import './sass/variables';
-            main {
-              position: relative;
-            }
-          </style>
-        `
+      }
     };
   },
   methods: {
@@ -65,6 +44,25 @@ export default {
       console.debug("onCmBlur", codemirror);
     }
   }
+  // computed: {
+  //   code: {
+  //     get() {
+  //       return JSON.stringify({
+  //         AWSTemplateFormatVersion: "2010-09-09",
+  //         Transform: "AWS::Serverless-2016-10-31",
+  //         Resources: {
+  //           MyHelloMundoEC2: {
+  //             Type: "AWS::EC2::Instance",
+  //             Properties: {
+  //               ImageId: "ami-0be2609ba883822ec"
+  //             }
+  //           }
+  //         }
+  //       });
+  //     },
+  //     set() {}
+  //   }
+  // }
 };
 </script>
 
