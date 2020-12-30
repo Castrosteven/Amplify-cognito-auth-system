@@ -14,7 +14,7 @@
       <v-row>
         <v-col cols="12">
           <v-card>
-            <v-card-title>Api Creator</v-card-title>
+            <v-card-title>Serveless Function Generator</v-card-title>
             <v-form @submit.prevent="makeApi">
               <v-card-text>
                 <v-text-field

@@ -8,9 +8,11 @@
       </v-row>
     </v-container>
     <v-container fill-height>
-      <v-row justify="center">
-        <v-col cols="12">
-          <editor :code="code" />
+      <v-row justify="center" align="center">
+        <v-col cols="6" style="background-color:#eeeeee;">
+          <p>
+          <pre>{{ code }}</pre>
+          </p>
         </v-col>
       </v-row>
     </v-container>
@@ -35,7 +37,7 @@ export default {
   },
   methods: {
     send(e) {
-      this.code = dedent(JSON.stringify(e));
+      this.code = e;
     }
   }
 };
