@@ -1,14 +1,20 @@
 <template>
   <section>
+     <div class="text-center">
+        <h2 >
+        Serveless Application Model Template Generator.
+      </h2>
+      <p>
+        This application will Generate you a custom .JSON file with everything
+        you need help you build a reliable, secure , and scaleable
+        infrastructure. That Follows Best Practices
+      </p>
+     </div>
     <v-container fill-height>
       <v-row justify="center">
-        <v-col cols="12">
-          <Generator @sendToEditor="send" />
+        <v-col cols="6">
+          <ServerlessFunction @sendToEditor="send" />
         </v-col>
-      </v-row>
-    </v-container>
-    <v-container fill-height>
-      <v-row justify="center" align="center">
         <v-col cols="6" style="background-color:#eeeeee;">
           <p>
           <pre>{{ code }}</pre>
@@ -16,11 +22,12 @@
         </v-col>
       </v-row>
     </v-container>
+
   </section>
 </template>
 
 <script>
-import Generator from "@/components/dashboard/Generator";
+import ServerlessFunction from "@/components/dashboard/ServerlessFunction";
 import Editor from "@/components/dashboard/Editor.vue";
 import dedent from "dedent";
 
@@ -32,7 +39,7 @@ export default {
     };
   },
   components: {
-    Generator,
+    ServerlessFunction,
     Editor
   },
   methods: {

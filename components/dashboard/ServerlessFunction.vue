@@ -1,21 +1,11 @@
 <template>
   <div class="div">
-    <section>
-      <h2>
-        Serveless Application Model Template Generator.
-      </h2>
-      <p>
-        This application will Generate you a custom .JSON file with everything
-        you need help you build a reliable, secure , and scaleable
-        infrastructure. That Follows Best Practices
-      </p>
-    </section>
     <v-container>
       <v-row>
         <v-col cols="12">
           <v-card>
             <v-card-title>Serveless Function Generator</v-card-title>
-            <v-form @submit.prevent="makeApi">
+            <v-form @submit.prevent="makeServelessFunctionResource">
               <v-card-text>
                 <v-text-field
                   placeholder="Project Description"
@@ -28,7 +18,7 @@
                 outlined
                 v-model="lambdaFunction.runtime"
               ></v-select>
-              <v-btn block type="submit">Make Api Template</v-btn>
+              <v-btn block type="submit">Make Servless Function Resource</v-btn>
             </v-form>
           </v-card>
         </v-col>
@@ -38,10 +28,10 @@
 </template>
 
 <script>
-import Api from "../../services/SAM_API.JS";
+import ServelessFunction from "../../services/SAMServelessFunction.js";
 import dedent from "dedent";
 export default {
-  name: "Generator",
+  name: "ServerlessFunction",
   data() {
     return {
       // https://github.com/boto/botocore/blob/develop/botocore/data/lambda/2015-03-31/service-2.json
@@ -77,9 +67,9 @@ export default {
     };
   },
   methods: {
-    makeApi() {
+    makeServelessFunctionResource() {
       const lambdaFunction = this.lambdaFunction;
-      const SamApitemplate = new Api(lambdaFunction);
+      const SamApitemplate = new ServelessFunction(lambdaFunction);
       const template = SamApitemplate.finalTemplate;
       this.lambdaFunction = {};
       this.$emit("sendToEditor", template);

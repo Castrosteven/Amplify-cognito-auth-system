@@ -1,4 +1,4 @@
-class Api {
+class ServelessFunction {
   constructor(apiProperties) {
     this.properties = apiProperties;
   }
@@ -22,7 +22,7 @@ class Api {
           Properties: {
             CodeUri: "hello-world/",
             Handler: "app.lambdaHandler",
-            Runtime: "nodejs12.x",
+            Runtime: this.properties.runtime,
             Events: {
               HelloWorld: {
                 Type: "Api",
@@ -39,7 +39,7 @@ class Api {
     return template;
   }
 }
-export default Api;
+export default ServelessFunction;
 
 //   const api = {
 //    "Type": "AWS::Serverless::Api",
