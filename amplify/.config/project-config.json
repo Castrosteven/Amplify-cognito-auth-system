@@ -1,17 +1,17 @@
 {
-    "projectName": "alloy",
-    "version": "3.0",
-    "frontend": "javascript",
-    "javascript": {
-        "framework": "none",
-        "config": {
-            "SourceDir": "src",
-            "DistributionDir": "dist",
-            "BuildCommand": "npm.cmd run-script build",
-            "StartCommand": "npm.cmd run-script start"
-        }
-    },
-    "providers": [
-        "awscloudformation"
-    ]
+  "providers": [
+    "awscloudformation"
+  ],
+  "projectName": "alloy",
+  "version": "3.0",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "vue",
+    "config": {
+      "SourceDir": "/",
+      "DistributionDir": "dist",
+      "BuildCommand": "npm.cmd run-script build",
+      "StartCommand": "npm.cmd run-script start"
+    }
+  }
 }
