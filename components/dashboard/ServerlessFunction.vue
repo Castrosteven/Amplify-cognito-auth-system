@@ -100,7 +100,6 @@ export default {
         { name: "DynamoDB", icon: "Arch_Amazon-DynamoDB_64" },
         { name: "EventBridgeRule", icon: "Arch_Amazon-EventBridge_64" },
         { name: "HttpApi", icon: "Arch_Amazon-API-Gateway_64" },
-
         {
           name: "Api",
           icon: "Arch_Amazon-API-Gateway_64"
@@ -126,11 +125,9 @@ export default {
       const lambdaFunction = this.lambdaFunction;
       const SamApitemplate = new ServerlessFunction(lambdaFunction);
       const template = SamApitemplate.finalTemplate;
-      this.lambdaFunction = {};
       this.$emit("sendToEditor", template);
     },
     eventChooser(e) {
-      console.log(e);
       this.trigger.selected = true;
       this.lambdaFunction.type = e;
     }
