@@ -1,4 +1,4 @@
-class SAMServelessFunction {
+class ServerlessFunction {
   constructor(apiProperties) {
     this.properties = apiProperties;
   }
@@ -39,7 +39,7 @@ class SAMServelessFunction {
     return template;
   }
 }
-export default SAMServelessFunction;
+export default ServerlessFunction;
 
 //   const api = {
 //    "Type": "AWS::Serverless::Api",
