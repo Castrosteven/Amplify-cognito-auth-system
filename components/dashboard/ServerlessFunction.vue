@@ -21,20 +21,28 @@
                 <p>What Event should trigger this function?</p>
                 <v-container>
                   <v-row justify="center" align-content="center">
-                    <v-col v-for="source in sources" :key="source.name">
-                      <v-btn
+                    <!-- Event Type Chooser -->
+                    <v-col
+                      cols="4"
+                      v-for="source in EventSources"
+                      :key="source.name"
+                      align-self="center"
+                    >
+                      <v-img
+                        contain
+                        :src="require(`~/assets/awsIcons/${source.icon}.png`)"
+                        max-height="40"
+                        max-width="40"
                         @click="eventChooser(source.name)"
-                        icon
-                        v-model="trigger.event"
                       >
-                        <v-img
-                          contain
-                          :src="require(`~/assets/awsIcons/${source.icon}.png`)"
-                          max-height="40"
-                          max-width="40"
-                        ></v-img>
-                      </v-btn>
-                      <p>{{ source.name }}</p>
+                      </v-img>
+                      <span>{{ source.name }}</span>
+                    </v-col>
+                    <!-- Sourece Properties -->
+                    <v-col cols="12">
+                      <div v-if="trigger.selected">
+                        <p>You Choose {{ lambdaFunction.type }}</p>
+                      </div>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -81,10 +89,21 @@ export default {
         "provided",
         "provided.al2"
       ],
-      sources: [
+      EventSources: [
+        { name: "AlexaSkill", icon: "Res_IoT_Alexa_Skill_48_Light" },
+        {
+          name: "CloudWatchEvent",
+          icon: "Res_Amazon-Cloudwatch_Event-Based_48_Light"
+        },
+        { name: "CloudWatchLogs", icon: "Res_Cloudwatch_Logs_48_Light" },
+        { name: "Cognito", icon: "Arch_Amazon-Cognito_64" },
+        { name: "DynamoDB", icon: "Arch_Amazon-DynamoDB_64" },
+        { name: "EventBridgeRule", icon: "Arch_Amazon-EventBridge_64" },
+        { name: "HttpApi", icon: "Arch_Amazon-API-Gateway_64" },
+
         {
           name: "Api",
-          icon: "Arch_Amazon-API-Gateway_64@5x"
+          icon: "Arch_Amazon-API-Gateway_64"
         },
         {
           name: "S3",
