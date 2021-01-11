@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import SAMServelessFunction from "../../services/SAMServelessFunction.js";
+import SAMServelessFunction from "../../services/SAMServelessFunction";
 import dedent from "dedent";
 export default {
   name: "ServerlessFunction",
