@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "alloy",
+  "projectName": "webdevsNyc",
   "version": "3.0",
   "frontend": "javascript",
   "javascript": {
@@ -10,8 +10,8 @@
     "config": {
       "SourceDir": "/",
       "DistributionDir": "dist",
-      "BuildCommand": "npm.cmd run-script build",
-      "StartCommand": "npm.cmd run-script start"
+      "BuildCommand": "npm run-script build",
+      "StartCommand": "npm run-script start"
     }
   }
 }
