@@ -25,7 +25,7 @@ class ServerlessFunction {
             Runtime: this.properties.runtime,
             Events: {
               HelloWorld: {
-                Type: "Api",
+                Type: this.properties.type,
                 Properties: {
                   Path: "/hello",
                   Method: "get"
