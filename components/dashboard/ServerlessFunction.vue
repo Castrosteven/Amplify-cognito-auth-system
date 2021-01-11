@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import ServelessFunction from "../../services/SAMServelessFunction.js";
+import SAMServelessFunction from "../../services/SAMServelessFunction.js";
 import dedent from "dedent";
 export default {
   name: "ServerlessFunction",
@@ -69,7 +69,7 @@ export default {
   methods: {
     makeServelessFunctionResource() {
       const lambdaFunction = this.lambdaFunction;
-      const SamApitemplate = new ServelessFunction(lambdaFunction);
+      const SamApitemplate = new SAMServelessFunction(lambdaFunction);
       const template = SamApitemplate.finalTemplate;
       this.lambdaFunction = {};
       this.$emit("sendToEditor", template);
