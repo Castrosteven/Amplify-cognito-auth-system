@@ -30,7 +30,7 @@
           counter
           required
         ></v-text-field>
-        <v-btn :disabled="!valid" type="submit" color="primary"
+        <v-btn :disabled="!valid" type="submit" color="indigo" dark
           >Change Password</v-btn
         >
       </v-form>

@@ -8,7 +8,8 @@
             <v-form @submit.prevent="makeServelessFunctionResource">
               <v-card-text>
                 <v-text-field
-                  placeholder="Project Description"
+                  label="Function Name "
+                  placeholder="Function Description"
                   v-model="lambdaFunction.description"
                   outlined
                 ></v-text-field>
@@ -44,10 +45,15 @@
                         <p>You Choose {{ lambdaFunction.type }}</p>
                       </div>
                     </v-col>
+                    <v-col cols="12" v-if="lambdaFunction.type == 'Api'">
+                      <ApiEvent />
+                    </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
-              <v-btn block type="submit">Make Servless Function Resource</v-btn>
+              <v-btn block type="submit" color="indigo" dark
+                >Make Servless Function Resource</v-btn
+              >
             </v-form>
           </v-card>
         </v-col>
@@ -58,9 +64,12 @@
 
 <script>
 import ServerlessFunction from "../../services/ServerlessFunction";
+import ApiEvent from "./SFEvents/ApiEvent";
 import dedent from "dedent";
+
 export default {
   name: "ServerlessFunction",
+  components: { ApiEvent },
   data() {
     return {
       // https://github.com/boto/botocore/blob/develop/botocore/data/lambda/2015-03-31/service-2.json

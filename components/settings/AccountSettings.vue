@@ -11,7 +11,9 @@
           :rules="rules.usernameRules"
         ></v-text-field>
 
-        <v-btn type="submit" :disabled="!valid" color="primary">Edit </v-btn>
+        <v-btn type="submit" :disabled="!valid" color="indigo" dark
+          >Edit
+        </v-btn>
       </v-form>
     </v-card-text>
   </v-card>

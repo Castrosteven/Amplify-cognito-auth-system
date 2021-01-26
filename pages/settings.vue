@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-tabs v-model="tab" background-color="primary" dark>
+      <v-tabs v-model="tab" background-color="indigo" dark>
         <v-tab v-for="item in items" :key="item.tab">
           {{ item.tab }}
         </v-tab>
@@ -18,6 +18,7 @@
 <script>
 import AccountSettings from "@/components/settings/AccountSettings.vue";
 import ResetPassword from "@/components/settings/ResetPassword.vue";
+import AmazonAccountSettings from "@/components/settings/AmazonAccountSettings.vue";
 
 export default {
   name: "settings",
@@ -27,13 +28,15 @@ export default {
 
       items: [
         { tab: "Account", content: "AccountSettings" },
-        { tab: "Password", content: "ResetPassword" }
+        { tab: "Password", content: "ResetPassword" },
+        { tab: "Amazon Account Settings", content: "AmazonAccountSettings" }
       ]
     };
   },
   components: {
     AccountSettings,
-    ResetPassword
+    ResetPassword,
+    AmazonAccountSettings
   }
 };
 </script>

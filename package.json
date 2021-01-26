@@ -1,5 +1,5 @@
 {
-    "name": "alloy",
+    "name": "serverless_generator",
     "version": "1.0.0",
     "private": true,
     "scripts": {

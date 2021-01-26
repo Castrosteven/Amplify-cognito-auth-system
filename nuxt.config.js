@@ -6,8 +6,8 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    titleTemplate: "%s - alloy",
-    title: "alloy",
+    titleTemplate: "%s - Serverless Generator",
+    title: "Serverless Generator",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -19,13 +19,17 @@ export default {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     // ...
-    'codemirror/lib/codemirror.css',
-    'codemirror/theme/base16-dark.css',
+    "codemirror/lib/codemirror.css",
+    "codemirror/theme/base16-dark.css"
     // more styles...
   ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [{ src: '~plugins/nuxt-codemirror-plugin.js', ssr: false },{ src: '~/plugins/amplify.js', mode: 'client' }, '~/plugins/auth'],
+  plugins: [
+    { src: "~plugins/nuxt-codemirror-plugin.js", ssr: false },
+    { src: "~/plugins/amplify.js", mode: "client" },
+    "~/plugins/auth"
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,

@@ -11,7 +11,7 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">
-            Alloy
+            Serverless Generator
           </v-list-item-title>
           <v-list-item-subtitle>
             {{ user.attributes["custom:username"] }}
@@ -22,7 +22,7 @@
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" link :to="item.to">
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon color="indigo">{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -31,12 +31,20 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar :clipped-left="clipped" fixed app color="indigo" dark>
       <v-app-bar-nav-icon
         v-if="isAuthenticated"
         @click.stop="drawer = !drawer"
       />
+      <v-img
+        class="mx-2"
+        :src="require('~/assets/logo.png')"
+        max-height="40"
+        max-width="40"
+        contain
+      ></v-img>
       <v-toolbar-title v-text="title" />
+
       <v-spacer />
       <v-btn @click="signOut" v-if="isAuthenticated">
         Sign Out
@@ -90,17 +98,12 @@ export default {
           icon: "mdi-cog",
           title: "Settings",
           to: "/settings"
-        },
-        {
-          icon: "mdi-apps",
-          title: "Dashboard",
-          to: "/dashboard"
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: "Vuetify.js"
+      title: "Serverless Generator"
     };
   },
   computed: {
