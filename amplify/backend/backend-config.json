@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "samtemplategenerator3aa71ab3": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

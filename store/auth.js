@@ -12,6 +12,7 @@ export const actions = {
           "custom:username": username
         }
       });
+      console.log(user);
       commit("setUser", user, { root: true });
       if (user.userConfirmed == false)
         commit(
@@ -70,6 +71,7 @@ export const actions = {
   async resendCode({ commit }, { username }) {
     await Auth.resendSignUp(username)
       .then(res => {
+        console.log(res);
         commit("setMessage", `Sent Verification Code`, { root: true });
       })
       .catch(err => {
