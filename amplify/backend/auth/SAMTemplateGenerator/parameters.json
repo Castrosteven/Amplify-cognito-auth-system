@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "samtemplategenerator3aa71ab3_identitypool_3aa71ab3",
+    "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "samtem3aa71ab3",
-    "userPoolName": "samtemplategenerator3aa71ab3_userpool_3aa71ab3",
+    "resourceNameTruncated": "samtem2f96c829",
+    "userPoolName": "SAMTemplateGenerator",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -12,11 +12,16 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code",
-    "emailVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Forgot password code: {####}",
+    "emailVerificationMessage": "Forgot password code: {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
-    "passwordPolicyCharacters": [],
+    "passwordPolicyCharacters": [
+        "Requires Lowercase",
+        "Requires Numbers",
+        "Requires Symbols",
+        "Requires Uppercase"
+    ],
     "requiredAttributes": [
         "email"
     ],
@@ -28,10 +33,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "samtem3aa71ab3_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "SAMTem2f96c829_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "3aa71ab3",
-    "resourceName": "samtemplategenerator3aa71ab3",
+    "sharedId": "2f96c829",
+    "resourceName": "SAMTemplateGenerator",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -45,12 +50,16 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "serviceName": "Cognito",
     "usernameAttributes": [
         "email"
     ],
+    "useDefault": "manual",
+    "userPoolGroups": false,
     "userPoolGroupList": [],
-    "serviceName": "Cognito",
+    "adminQueries": false,
+    "thirdPartyAuth": false,
+    "authProviders": [],
     "usernameCaseSensitive": false,
     "dependsOn": []
 }

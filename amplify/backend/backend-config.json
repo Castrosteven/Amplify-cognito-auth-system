@@ -1,6 +1,6 @@
 {
   "auth": {
-    "samtemplategenerator3aa71ab3": {
+    "SAMTemplateGenerator": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
