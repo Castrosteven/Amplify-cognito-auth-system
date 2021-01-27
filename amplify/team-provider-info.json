@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-samtemplategenerator-dev-203325-authRole",
+      "UnauthRoleArn": "arn:aws:iam::573687461965:role/amplify-samtemplategenerator-dev-203325-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::573687461965:role/amplify-samtemplategenerator-dev-203325-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-samtemplategenerator-dev-203325-deployment",
+      "UnauthRoleName": "amplify-samtemplategenerator-dev-203325-unauthRole",
+      "StackName": "amplify-samtemplategenerator-dev-203325",
+      "StackId": "arn:aws:cloudformation:us-east-1:573687461965:stack/amplify-samtemplategenerator-dev-203325/a6d623f0-603f-11eb-a0e8-0a4194e8a939",
+      "AmplifyAppId": "d3rv1h48x3ct9n"
+    },
+    "categories": {
+      "auth": {
+        "SAMTemplateGenerator": {}
+      }
+    }
+  }
+}
